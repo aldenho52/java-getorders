@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,8 +27,15 @@ public class CustomersController
         return new ResponseEntity<>(myList, HttpStatus.OK);
     }
 
-
     //    http://localhost:2019/customers/customer/7
+    @GetMapping(value="/customer/{custid}", produces = "application/json")
+    public ResponseEntity<?> findCustomerById(@PathVariable long custid)
+    {
+        Customer customer = customerServices.findById(custid);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
+    }
+
+
     //    http://localhost:2019/customers/customer/77
     //    http://localhost:2019/customers/namelike/mes
     //    http://localhost:2019/customers/namelike/cin
