@@ -2,6 +2,7 @@ package com.lambdaschool.javaorders.services;
 
 import com.lambdaschool.javaorders.models.Customer;
 import com.lambdaschool.javaorders.repositories.CustomersRepository;
+import com.lambdaschool.javaorders.views.OrderCounts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,19 @@ public class CustomerServicesImpl implements CustomerServices {
         Customer c = custrepos.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Customer " + id + " Not Found!"));
         return c;
+    }
+
+    @Override
+    public List<Customer> findByNameLike(String substring)
+    {
+        List<Customer> rtnList = custrepos.findByCustnameContainingIgnoreCase(substring);
+        return rtnList;
+    }
+
+    @Override
+    public List<OrderCounts> findOrderCounts()
+    {
+        List<OrderCounts> rtnList = custrepos.findOrderCounts();
+        return rtnList;
     }
 }
