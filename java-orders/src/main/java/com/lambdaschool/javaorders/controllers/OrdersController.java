@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/orders")
 public class OrdersController
@@ -25,5 +27,14 @@ public class OrdersController
         Order order  = orderServices.findById(orderid);
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
+
+    //    http://localhost:2019/orders/advanceamount/{amount}
+    @GetMapping(value="advanceamount/{amount}", produces = "application/json")
+    public ResponseEntity<?> findOrdersWithAdvanceAmount(@PathVariable double amount)
+    {
+        List<Order> myList = orderServices.findByAdvanceamountGreaterThan(amount);
+        return new ResponseEntity<>(myList, HttpStatus.OK);
+    }
+
 
 }
